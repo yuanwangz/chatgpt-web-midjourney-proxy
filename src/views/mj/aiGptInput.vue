@@ -4,7 +4,7 @@ import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { t } from '@/locales'
 import { NInput ,NButton,useMessage,NImage,NTooltip, NAutoComplete } from 'naive-ui'
 import { SvgIcon } from '@/components/common';
-import {canVisionModel, GptUploader, mlog, upImg, getFileFromClipboard, upFiles} from '@/api';
+import {canVisionModel, GptUploader, mlog, upImg, getFileFromClipboard} from '@/api';
 import { gptConfigStore, homeStore } from '@/store';
 import { AutoCompleteOptions } from 'naive-ui/es/auto-complete/src/interface';
 import { RenderLabel } from 'naive-ui/es/_internal/select-menu/src/interface';

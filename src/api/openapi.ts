@@ -44,9 +44,9 @@ export const gptFetch=(url:string,data?:any,opt2?:any )=>{
 }
 
 export const GptUploader =   ( url:string, FormData:FormData )=>{
-    if(gptServerStore.myData.OPENAI_API_BASE_URL){
-        return `${ gptServerStore.myData.OPENAI_API_BASE_URL}${url}`;
-    }
+    // if(gptServerStore.myData.OPENAI_API_BASE_URL){
+    //     return `${ gptServerStore.myData.OPENAI_API_BASE_URL}${url}`;
+    // }
     url= process.env.UPLOADER_URL? process.env.UPLOADER_URL :  gptGetUrl( url );
 		url= '/openapi'+url;
     let headers=  {'Content-Type': 'multipart/form-data'}
