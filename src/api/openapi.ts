@@ -48,7 +48,7 @@ export const GptUploader =   ( url:string, FormData:FormData )=>{
         return `${ gptServerStore.myData.OPENAI_API_BASE_URL}${url}`;
     }
     url= process.env.UPLOADER_URL? process.env.UPLOADER_URL :  gptGetUrl( url );
-		url= `/openapi${url}`;
+		url= '/openapi'+url;
     let headers=  {'Content-Type': 'multipart/form-data'}
 
     if(gptServerStore.myData.OPENAI_API_BASE_URL && url.indexOf(gptServerStore.myData.OPENAI_API_BASE_URL)>-1  ) headers={...headers,...getHeaderAuthorization()}
