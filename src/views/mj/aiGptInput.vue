@@ -80,7 +80,7 @@ function selectFile(input:any){
 
  const upFile= (file:any )=>{
   const filename= file.name;
-   if (! (filename.endsWith('.jpg') ||
+   if ((filename.endsWith('.jpg') ||
        filename.endsWith('.gif') ||
        filename.endsWith('.png') ||
        filename.endsWith('.jpeg') )) {
