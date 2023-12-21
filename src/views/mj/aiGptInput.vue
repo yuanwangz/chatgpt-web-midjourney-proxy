@@ -172,14 +172,18 @@ const paste=   (e: ClipboardEvent)=>{
                     <template #trigger>
                     <SvgIcon icon="ri:attachment-line" class="absolute bottom-[10px] left-[8px] cursor-pointer" @click="fsRef.click()"></SvgIcon>
                     </template>
-                    <div v-if="canVisionModel(gptConfigStore.myData.model)">
-                       <span>上传图片、附件<br/>能上传图片、PDF、EXCEL等文档</span>
-                       <p>支持拖拽</p>
-                    </div>
-                    <div v-else>
-                         <span>上传图片<br/>会自动调用 gpt-4-vision-preview 模型<br>注意：会有额外的图片费用</span>
-                          <p>支持拖拽</p>
-                    </div>
+<!--                    <div v-if="canVisionModel(gptConfigStore.myData.model)">-->
+<!--                       <span>上传图片、附件<br/>能上传图片、PDF、EXCEL等文档</span>-->
+<!--                       <p>支持拖拽</p>-->
+<!--                    </div>-->
+                      <div>
+                        <span>上传图片、附件<br/>能上传图片、PDF、EXCEL等文档</span>
+                        <p>支持拖拽</p>
+                      </div>
+<!--                    <div v-else>-->
+<!--                         <span>上传图片<br/>会自动调用 gpt-4-vision-preview 模型<br>注意：会有额外的图片费用</span>-->
+<!--                          <p>支持拖拽</p>-->
+<!--                    </div>-->
                     </n-tooltip>
                 </div>
 
