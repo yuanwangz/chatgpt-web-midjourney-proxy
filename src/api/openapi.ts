@@ -17,15 +17,15 @@ const getUrl=(url:string)=>{
     }
     return `/openapi${url}`;
 }
-export const gptGetUrl = getUrl 
+export const gptGetUrl = getUrl
 export const gptFetch=(url:string,data?:any,opt2?:any )=>{
     mlog('gptFetch', url  );
     let headers= {'Content-Type':'application/json'}
     if(opt2 && opt2.headers ) headers= opt2.headers;
-     
+
     headers={...headers,...getHeaderAuthorization()}
     return new Promise<any>((resolve, reject) => {
-        let opt:RequestInit ={method:'GET'}; 
+        let opt:RequestInit ={method:'GET'};
         opt.headers= headers ;
         if(opt2?.upFile ){
              opt.method='POST';
@@ -40,7 +40,7 @@ export const gptFetch=(url:string,data?:any,opt2?:any )=>{
         .catch(e=>reject(e)))
         .catch(e=>reject(e))
     })
-     
+
 }
 
 export const GptUploader =   ( url:string, FormData:FormData )=>{
@@ -49,15 +49,15 @@ export const GptUploader =   ( url:string, FormData:FormData )=>{
     // }
     url= gptServerStore.myData.UPLOADER_URL? gptServerStore.myData.UPLOADER_URL :  gptGetUrl( url );
     let headers=  {'Content-Type': 'multipart/form-data'}
-     
+    url= `/openapi${url}`;
     if(gptServerStore.myData.OPENAI_API_BASE_URL && url.indexOf(gptServerStore.myData.OPENAI_API_BASE_URL)>-1  ) headers={...headers,...getHeaderAuthorization()}
     return new Promise<any>((resolve, reject) => {
             axios.post( url , FormData, {
-            headers 
-        }).then(response =>  resolve(response.data ) 
+            headers
+        }).then(response =>  resolve(response.data )
         ).catch(error =>reject(error)  );
     })
-    
+
 }
 
 export const subGPT= async (data:any, chat:Chat.Chat )=>{
@@ -100,7 +100,7 @@ function getHeaderAuthorization(){
     }
 }
 
-export const getSystemMessage = ()=>{ 
+export const getSystemMessage = ()=>{
     //KnowledgeCutOffDate
     if( gptConfigStore.myData.systemMessage) return  gptConfigStore.myData.systemMessage
     let model= gptConfigStore.myData.model?gptConfigStore.myData.model: "gpt-3.5-turbo";
@@ -108,8 +108,8 @@ export const getSystemMessage = ()=>{
 Knowledge cutoff: ${KnowledgeCutOffDate[model]}
 Current model: ${model}
 Current time: ${ new Date().toLocaleString()}
-Latex inline: $x^2$ 
-Latex block: $$e=mc^2$$`;   
+Latex inline: $x^2$
+Latex block: $$e=mc^2$$`;
 return DEFAULT_SYSTEM_TEMPLATE;
 
 }
@@ -117,7 +117,7 @@ export const subModel= async (opt: subModelType)=>{
     //
     const model= opt.model?? ( gptConfigStore.myData.model?gptConfigStore.myData.model: "gpt-3.5-turbo");
     let max_tokens= gptConfigStore.myData.max_tokens;
-    if(model=='gpt-4-vision-preview' && max_tokens>2048) max_tokens=2048; 
+    if(model=='gpt-4-vision-preview' && max_tokens>2048) max_tokens=2048;
     let body ={
             max_tokens ,
             model ,
@@ -125,18 +125,18 @@ export const subModel= async (opt: subModelType)=>{
             "top_p": 1,
             "presence_penalty":0,
             "messages": opt.message
-           ,stream:true 
+           ,stream:true
         }
-        // 
+        //
 
         let  headers ={
                 'Content-Type': 'application/json'
                 //,'Authorization': 'Bearer ' +gptServerStore.myData.OPENAI_API_KEY
-                ,'Accept': 'text/event-stream ' 
+                ,'Accept': 'text/event-stream '
         }
         headers={...headers,...getHeaderAuthorization()}
-         
-        try { 
+
+        try {
          await fetchSSE( gptGetUrl('/v1/chat/completions'),{
             method: 'POST',
             headers: headers,
