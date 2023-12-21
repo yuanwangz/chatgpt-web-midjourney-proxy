@@ -1,6 +1,11 @@
-#!/bin/sh
 
-pnpm run prod &
+cd ./service
+nohup pnpm start > service.log &
+echo "Start service complete!"
 
-node server/app.js
 
+cd ..
+echo "" > front.log
+nohup pnpm dev > front.log &
+echo "Start front complete!"
+tail -f front.log

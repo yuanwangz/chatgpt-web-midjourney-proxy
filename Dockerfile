@@ -51,19 +51,6 @@ COPY --from=frontend /app/dist /app/public
 
 COPY --from=backend /app/build /app/build
 
-COPY /server /app/server
+EXPOSE 3002
 
-WORKDIR /app/server
-
-RUN npm install
-
-WORKDIR /app
-
-COPY start.sh /app
-
-RUN chmod +x /app/start.sh
-
-EXPOSE 3002 3000
-
-CMD ["/app/start.sh"]
-#CMD ["pnpm", "run", "prod"]
+CMD ["pnpm", "run", "prod"]
