@@ -12,11 +12,15 @@ export const KnowledgeCutOffDate: Record<string, string> = {
 
 const getUrl=(url:string)=>{
     if(url.indexOf('http')==0) return url;
+		console.log("myData.OPENAI_API_BASE_URL:"+myData.OPENAI_API_BASE_URL);
+		console.log("process.env.OPENAI_API_BASE_URL:"+process.env.OPENAI_API_BASE_URL);
+		console.log("url:"+url);
     if(gptServerStore.myData.OPENAI_API_BASE_URL){
         return `${ gptServerStore.myData.OPENAI_API_BASE_URL}${url}`;
     }else if (process.env.OPENAI_API_BASE_URL){
         return `${ process.env.OPENAI_API_BASE_URL}${url}`;
     }
+		
     return `/openapi${url}`;
 }
 export const gptGetUrl = getUrl
