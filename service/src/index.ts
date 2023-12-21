@@ -165,7 +165,10 @@ app.use('/uploads', express.static('uploads'));
 app.use('/openapi', proxy(API_BASE_URL, {
   https: false, limit: '10mb',
   proxyReqPathResolver: function (req) {
-    return req.originalUrl.replace('/openapi', '') // 将URL中的 `/openapi` 替换为空字符串
+    //return req.originalUrl.replace('/openapi', '') // 将URL中的 `/openapi` 替换为空字符串
+		let reqUrls = req.originalUrl.split('/openapi');
+		console.log(API_BASE_URL+reqUrls[1]);
+		return API_BASE_URL+reqUrls[1];
   },
   proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
     proxyReqOpts.headers['Authorization'] ='Bearer '+ process.env.OPENAI_API_KEY;
