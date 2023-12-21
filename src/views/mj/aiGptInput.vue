@@ -124,8 +124,9 @@ function handleEnter(event: KeyboardEvent) {
 }
 
 const acceptData = computed(() => {
-  if(  canVisionModel(gptConfigStore.myData.model) ) return "*/*";
-  return  "image/jpeg, image/jpg, image/png, image/gif"
+  // if(  canVisionModel(gptConfigStore.myData.model) ) return "*/*";
+  // return  "image/jpeg, image/jpg, image/png, image/gif"
+  return "*/*";
 })
 
 const drop = (e: DragEvent) => {
