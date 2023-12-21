@@ -51,6 +51,14 @@ COPY --from=frontend /app/dist /app/public
 
 COPY --from=backend /app/build /app/build
 
-EXPOSE 3002
+COPY /server /app/server
+
+WORKDIR /app/server
+
+RUN npm install
+
+WORKDIR /app
+
+EXPOSE 3002 3000
 
 CMD ["pnpm", "run", "prod"]

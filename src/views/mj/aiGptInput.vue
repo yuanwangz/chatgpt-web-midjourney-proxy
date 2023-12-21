@@ -93,25 +93,17 @@ function selectFile(input:any){
         //const file = input.target.files[0];
         formData.append('file', file);
         ms.info('上传中...');
-				upFiles( file).then(d=>{
-					fsRef.value.value='';
-					if(st.value.fileBase64.findIndex(v=>v==d)>-1) {
-						ms.error('不能重复上传')
-						return ;
-					}
-					st.value.fileBase64.push(d)
-				} ).catch(e=>ms.error(e));
-        // GptUploader('/v1/upload',formData).then(r=>{
-        //     //mlog('上传成功', r);
-        //     if(r.url ){
-        //         ms.info('上传成功');
-        //         if(r.url.indexOf('http')>-1) {
-        //             st.value.fileBase64.push(r.url)
-        //         }else{
-        //             st.value.fileBase64.push(location.origin +r.url)
-        //         }
-        //     }else if(r.error) ms.error(r.error);
-        // }).catch(e=>ms.error('上传失败:'+ ( e.message?? JSON.stringify(e)) ));
+        GptUploader('/v1/upload',formData).then(r=>{
+            //mlog('上传成功', r);
+            if(r.url ){
+                ms.info('上传成功');
+                if(r.url.indexOf('http')>-1) {
+                    st.value.fileBase64.push(r.url)
+                }else{
+                    st.value.fileBase64.push(location.origin +r.url)
+                }
+            }else if(r.error) ms.error(r.error);
+        }).catch(e=>ms.error('上传失败:'+ ( e.message?? JSON.stringify(e)) ));
     }
  }
 
