@@ -11,7 +11,7 @@ const drawSent=(d:any )=> $emit('drawSent',d);
 <template>
 <div class="overflow-y-auto bg-[#fafbfc] pt-2 dark:bg-[#18181c] h-full ">
 
-<n-tabs type="line" animated default-value="draw">
+<n-tabs type="line" animated default-value="dall3">
     <n-tab-pane name="start" tab="">
 
     </n-tab-pane>

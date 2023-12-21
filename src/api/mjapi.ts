@@ -19,9 +19,9 @@ export function upImg(file:any   ):Promise<any>
         //const file = input.target.files[0];
         const filename = file.name;
         //console.log('selectFile', file )
-        if(file.size>(1024*1024)){
+        if(file.size>(1024*1024*10)){
             //msgRef.value.showError('图片大小不能超过1M');
-            r('图片大小不能超过1M')
+            r('图片大小不能超过10M')
             return ;
         }
         if (! (filename.endsWith('.jpg') ||
@@ -278,7 +278,7 @@ export const getLastVersion=  async ()=>{
 
 export const canVisionModel= (model:string)=>{
     //['gpt-4-all','gpt-4-v'].indexOf(model)==-1 && model.indexOf('gpt-4-gizmo')==-1
-    if( ['gpt-4-all','gpt-4-v','gpt-4v','gpt-3.5-net'].indexOf(model)>-1 ) return true;
+    if( ['gpt-4-all','gpt-4-v','gpt-4v','gpt-3.5-net','gpt-4-mobile'].indexOf(model)>-1 ) return true;
     if(model.indexOf('gpt-4-gizmo')>-1 )return true;
     return false;
 }

@@ -8,7 +8,7 @@ import { canVisionModel, GptUploader, mlog, upImg,getFileFromClipboard } from '@
 import { gptConfigStore, homeStore } from '@/store';
 import { AutoCompleteOptions } from 'naive-ui/es/auto-complete/src/interface';
 import { RenderLabel } from 'naive-ui/es/_internal/select-menu/src/interface';
- 
+
 
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{ modelValue:string,disabled?:boolean,searchOptions?:AutoCompleteOptions,renderOption?: RenderLabel }>();
@@ -23,7 +23,7 @@ const placeholder = computed(() => {
 
 const handleSubmit = ( ) => {
     if( mvalue.value==''  ) return ;
-    if( homeStore.myData.isLoader  ) { 
+    if( homeStore.myData.isLoader  ) {
         return ;
     }
     let obj={
@@ -52,12 +52,12 @@ function selectFile(input:any){
             ms.error('不能重复上传')
             return ;
         }
-        st.value.fileBase64.push(d)  
+        st.value.fileBase64.push(d)
     } ).catch(e=>ms.error(e));
  }else{
     const formData = new FormData( );
     const file = input.target.files[0];
-    formData.append('file', file); 
+    formData.append('file', file);
     ms.info('上传中...');
     GptUploader('/v1/upload',formData).then(r=>{
         //mlog('上传成功', r);
@@ -74,7 +74,7 @@ function selectFile(input:any){
  */
 
 
- 
+
 
 }
 
@@ -86,12 +86,12 @@ function selectFile(input:any){
                 ms.error('不能重复上传')
                 return ;
             }
-            st.value.fileBase64.push(d)  
+            st.value.fileBase64.push(d)
         } ).catch(e=>ms.error(e));
     }else{
         const formData = new FormData( );
         //const file = input.target.files[0];
-        formData.append('file', file); 
+        formData.append('file', file);
         ms.info('上传中...');
         GptUploader('/v1/upload',formData).then(r=>{
             //mlog('上传成功', r);
@@ -106,7 +106,7 @@ function selectFile(input:any){
         }).catch(e=>ms.error('上传失败:'+ ( e.message?? JSON.stringify(e)) ));
     }
  }
- 
+
 
 function handleEnter(event: KeyboardEvent) {
   if (!isMobile.value) {
@@ -137,7 +137,7 @@ const drop = (e: DragEvent) => {
   //mlog('drop', files);
 }
 const paste=   (e: ClipboardEvent)=>{
-    let rz =   getFileFromClipboard(e); 
+    let rz =   getFileFromClipboard(e);
     if(rz.length>0 ) upFile(rz[0]);
 }
 </script>
@@ -146,7 +146,7 @@ const paste=   (e: ClipboardEvent)=>{
 
     <input type="file" id="fileInput"  @change="selectFile"  class="hidden" ref="fsRef"   :accept="acceptData"/>
 
-    <div class="flex items-base justify-start pb-1 flex-wrap-reverse" v-if="st.fileBase64.length>0 "> 
+    <div class="flex items-base justify-start pb-1 flex-wrap-reverse" v-if="st.fileBase64.length>0 ">
         <div class="w-[60px] h-[60px] rounded-sm bg-slate-50 mr-1 mt-1 text-red-300 relative group" v-for="(v,ii) in st.fileBase64">
          <NImage :src="v" object-fit="cover" class="w-full h-full" >
             <template #placeholder>
@@ -154,7 +154,7 @@ const paste=   (e: ClipboardEvent)=>{
                     <SvgIcon icon="mdi:download" />附{{ ii+1 }}
                 </a>
             </template>
-         </NImage> 
+         </NImage>
          <SvgIcon icon="mdi:close" class="hidden group-hover:block absolute top-[-5px] right-[-5px] rounded-full bg-red-300 text-white cursor-pointer" @click="st.fileBase64.splice(st.fileBase64.indexOf(v),1)"></SvgIcon>
         </div>
     </div>
@@ -164,7 +164,7 @@ const paste=   (e: ClipboardEvent)=>{
             :placeholder="placeholder"  :autosize="{ minRows: 1, maxRows: isMobile ? 4 : 8 }"
             @input="handleInput"
             @focus="handleFocus"
-            @blur="handleBlur" 
+            @blur="handleBlur"
             @keypress="handleEnter"    >
             <template #prefix>
                 <div  class=" relative; w-[22px]">
@@ -182,7 +182,7 @@ const paste=   (e: ClipboardEvent)=>{
                     </div>
                     </n-tooltip>
                 </div>
-                
+
             </template>
             <template #suffix>
                 <div  class=" relative; w-[40px] ">
@@ -205,7 +205,7 @@ const paste=   (e: ClipboardEvent)=>{
 </template>
 <style    >
 .myinputs .n-input .n-input-wrapper{
-     @apply items-stretch; 
-    
+     @apply items-stretch;
+
 }
 </style>
