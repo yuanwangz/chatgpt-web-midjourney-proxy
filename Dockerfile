@@ -59,6 +59,11 @@ RUN npm install
 
 WORKDIR /app
 
+COPY start.sh /app
+
+RUN chmod +x /app/start.sh
+
 EXPOSE 3002 3000
 
-CMD ["pnpm", "run", "prod"]
+CMD ["/app/start.sh"]
+#CMD ["pnpm", "run", "prod"]
