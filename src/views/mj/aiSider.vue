@@ -5,7 +5,7 @@ import { useBasicLayout } from '@/hooks/useBasicLayout'
 const { isMobile } = useBasicLayout()
 import { NAvatar,NTooltip } from 'naive-ui'
 import { homeStore, useUserStore } from '@/store'
- 
+
 //import gallery from '@/views/gallery/index.vue'
 
 const Setting = defineAsyncComponent(() => import('@/components/common/Setting/index.vue'))
@@ -30,7 +30,7 @@ const goHome =computed(  () => {
         <div class="flex flex-col space-y-4 flex-1">
             <a href="#/chat"    @click="st.active='chat'" class="router-link-active router-link-exact-active h-12 w-12 cursor-pointer rounded-xl bg-white duration-300 dark:bg-[#34373c] hover:bg-[#bbb] dark:hover:bg-[#555]">
                 <n-tooltip placement="right" trigger="hover">
-                  <template #trigger> 
+                  <template #trigger>
                     <div  class="flex h-full justify-center items-center py-1 flex-col " :class="[ goHome =='Chat' ? 'active' : '']">
                     <SvgIcon icon="ri:wechat-line" class="text-3xl  flex-1"></SvgIcon>
                      <span class="text-[10px]">对话</span>
@@ -38,27 +38,27 @@ const goHome =computed(  () => {
                  </template>
                 AI Chat
                 </n-tooltip>
-            </a> 
+            </a>
             <a   @click="homeStore.setMyData({act:'showgpts'}) " class=" router-link-exact-active h-12 w-12 cursor-pointer rounded-xl bg-white duration-300 dark:bg-[#34373c] hover:bg-[#bbb] dark:hover:bg-[#555]">
                 <n-tooltip placement="right" trigger="hover">
-                  <template #trigger> 
+                  <template #trigger>
                     <div  class="flex h-full justify-center items-center   py-1 flex-col" >
                     <SvgIcon icon="ri:apps-fill" class="text-3xl flex-1"></SvgIcon>
                      <span class="text-[10px]">GTPs</span>
-                    </div> 
+                    </div>
                   </template>
-                    ChatGPT Store 
+                    ChatGPT Store
                 </n-tooltip>
             </a>
 
 
             <a href="#/draw" @click="st.active='draw'" class=" router-link-exact-active h-12 w-12 cursor-pointer rounded-xl bg-white duration-300 dark:bg-[#34373c] hover:bg-[#bbb] dark:hover:bg-[#555]">
                 <n-tooltip placement="right" trigger="hover">
-                  <template #trigger> 
+                  <template #trigger>
                     <div  class="flex h-full justify-center items-center   py-1 flex-col" :class="[goHome=='draw' ? 'active' : '']">
                     <SvgIcon icon="ic:outline-palette" class="text-3xl flex-1"></SvgIcon>
                      <span class="text-[10px]">绘画</span>
-                    </div> 
+                    </div>
                   </template>
                     AI绘画 Midjourney引擎
                 </n-tooltip>
@@ -66,41 +66,41 @@ const goHome =computed(  () => {
 
 
 
-             <a   @click="homeStore.setMyData({act:'gallery'}) " class=" router-link-exact-active h-12 w-12 cursor-pointer rounded-xl bg-white duration-300 dark:bg-[#34373c] hover:bg-[#bbb] dark:hover:bg-[#555]">
-                <n-tooltip placement="right" trigger="hover">
-                  <template #trigger> 
-                    <div  class="flex h-full justify-center items-center   py-1 flex-col" >
-                    <SvgIcon icon="material-symbols:imagesmode-outline" class="text-3xl flex-1"></SvgIcon>
-                     <span class="text-[10px]">画廊</span>
-                    </div> 
-                  </template>
-                    我的画廊
-                </n-tooltip>
-            </a>
+<!--             <a   @click="homeStore.setMyData({act:'gallery'}) " class=" router-link-exact-active h-12 w-12 cursor-pointer rounded-xl bg-white duration-300 dark:bg-[#34373c] hover:bg-[#bbb] dark:hover:bg-[#555]">-->
+<!--                <n-tooltip placement="right" trigger="hover">-->
+<!--                  <template #trigger> -->
+<!--                    <div  class="flex h-full justify-center items-center   py-1 flex-col" >-->
+<!--                    <SvgIcon icon="material-symbols:imagesmode-outline" class="text-3xl flex-1"></SvgIcon>-->
+<!--                     <span class="text-[10px]">画廊</span>-->
+<!--                    </div> -->
+<!--                  </template>-->
+<!--                    我的画廊-->
+<!--                </n-tooltip>-->
+<!--            </a>-->
 
 
             <!-- <section  class=" router-link-exact-active h-12 w-12 cursor-pointer rounded-xl bg-white duration-300 dark:bg-[#34373c] hover:bg-[#bbb] dark:hover:bg-[#555]"
              >
                 <n-tooltip placement="right" trigger="hover">
-                  <template #trigger> 
+                  <template #trigger>
                     <div  class="flex  h-full justify-center items-center py-1 flex-col ">
                       <SvgIcon icon="mingcute:grid-2-line" class="text-3xl flex-1"></SvgIcon>
                       <span class="text-[10px]">画廊</span>
-                    </div>  
+                    </div>
                   </template>
                     画廊:看看别人是如何画的
-                </n-tooltip>                
+                </n-tooltip>
             </section> -->
 
-             
+
 
         </div>
-        <div class="flex flex-col  space-y-2 "> 
+        <div class="flex flex-col  space-y-2 ">
 
-            
+
             <NAvatar  size="large"  round  :src="userInfo.avatar"   v-if="userInfo.avatar"
              class=" cursor-pointer"  />
-            
+
             <HoverButton>
                 <div class="text-xl text-[#4f555e] dark:text-white flex h-full justify-center items-center "  @click="st.show = true">
                     <SvgIcon icon="ri:settings-4-line" />
@@ -113,9 +113,8 @@ const goHome =computed(  () => {
 
  <!-- <n-drawer v-model:show="st.showImg" :placement="isMobile?'bottom':'right'"  :class="isMobile?['!h-[90vh]']: ['!w-[80vw]']" style="--n-body-padding:0">
     <n-drawer-content title="GPT store" closable>
-      sdsd 
+      sdsd
     </n-drawer-content>
 </n-drawer> -->
 </template>
 
- 

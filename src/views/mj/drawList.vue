@@ -1,11 +1,11 @@
-<script setup lang='ts'> 
+<script setup lang='ts'>
 import { computed, onMounted, onUnmounted, ref,watch } from 'vue'
-import { useRoute } from 'vue-router' 
+import { useRoute } from 'vue-router'
 import {   useDialog, useMessage } from 'naive-ui'
- 
+
 import { useScroll } from '../chat/hooks/useScroll'
 import { useChat } from '../chat/hooks/useChat'
-import { useUsingContext } from '../chat/hooks/useUsingContext' 
+import { useUsingContext } from '../chat/hooks/useUsingContext'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { homeStore, useChatStore, usePromptStore } from '@/store'
 import {   mlog,subTask,localSaveAny, subGPT } from '@/api'
@@ -34,7 +34,7 @@ const conversationList = computed(() => dataSources.value.filter(item => (!item.
 
 const prompt = ref<any>(null)
 const loading = ref<boolean>(false)
- 
+
 // 未知原因刷新页面，loading 状态不会重置，手动重置
 dataSources.value.forEach((item, index) => {
   if (item.loading)
@@ -61,7 +61,7 @@ async function onConversation() {
   if (loading.value)
     return
   if( !message.drawText && dataSources.value.length==0){
-      message.drawText='AI绘图';
+      message.drawText='AI';
   }
 //   if (!message || message.trim() === '')
 //     return
@@ -91,13 +91,13 @@ async function onConversation() {
      }
      addChat(  +uuid, promptMsg );
 
-    
+
   }else if( message.action && message.action=='gpt.dall-e-3' ){ //gpt.dall-e-3
-    let promptMsg: Chat.Chat= getInitChat( message.data.prompt ); 
+    let promptMsg: Chat.Chat= getInitChat( message.data.prompt );
      addChat(  +uuid, promptMsg );
   }else if( message.drawText){
     let promptMsg: Chat.Chat= getInitChat(message.drawText)
-    
+
     if( message.fileBase64 && message.fileBase64.length>0 ){
        // promptMsg.opt={  images: message.fileBase64 }
        try{
@@ -108,9 +108,9 @@ async function onConversation() {
            mlog('localSaveAny error',e);
        }
     }
-    addChat(  +uuid, promptMsg ); 
-  } 
-  
+    addChat(  +uuid, promptMsg );
+  }
+
 
 
   scrollToBottom()
@@ -134,15 +134,15 @@ async function onConversation() {
       uuid:+uuid,
       myid: `${Date.now()}`
       ,model:message.action=='gpt.dall-e-3'? message.data.model :'midjourney'
-     
+
     }
   //mlog('outMsg model',outMsg.model );
   addChat(  +uuid, outMsg  )
   outMsg.index=  dataSources.value.length - 1;
   scrollToBottom()
 
-  try { 
-     if( message.action && message.action.indexOf('gpt.')==0 ){ 
+  try {
+     if( message.action && message.action.indexOf('gpt.')==0 ){
         await subGPT(message, outMsg );
      }
      else await subTask(message, outMsg );
@@ -197,7 +197,7 @@ async function onConversation() {
     loading.value = false
   }
 }
- 
+
 onUnmounted(() => {
   if (loading.value)
     controller.abort()
@@ -228,7 +228,7 @@ watch(()=>homeStore.myData.act,(n)=>{
 
         }
     }
-    
+
 });
 
 const toBottom= ()=>{

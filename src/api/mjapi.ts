@@ -1,10 +1,9 @@
 
  //import { useChat } from '@/views/chat/hooks/useChat'
 
-import { gptConfigStore, gptServerStore, homeStore } from "@/store";
+import { gptServerStore, homeStore } from "@/store";
 import { copyToClip } from "@/utils/copy";
-import { isNumber } from "@/utils/is";
-import { localGet, localSaveAny } from "./mjsave";
+ import { localGet, localSaveAny } from "./mjsave";
 //import { useMessage } from "naive-ui";
 export interface gptsType{
     gid:string
@@ -38,7 +37,7 @@ export function upImg(file:any   ):Promise<any>
         reader.onload = (e:any)=>  h( e.target.result);
         reader.readAsDataURL(file);
     })
-    
+
 }
 
 function containsChinese(str:string ) {
@@ -57,17 +56,17 @@ export  async function train( text:string){
             return ;
         }
 
-        
+
         if( !containsChinese(text.trim()) ){
             resolve( text.trim() );
             return ;
         }
-        
+
         // myTranslate( text.trim())
         //     .then((d:any)=>  resolve( d.content.replace(/[?.!]+$/, "")))
         //     .catch(( )=>   reject('翻译发生错误'))
         resolve( text.trim() )
-    }) 
+    })
 }
 
 export const mlog = (msg: string, ...args: unknown[]) => {
@@ -107,7 +106,7 @@ export const mjFetch=(url:string,data?:any)=>{
     header= {...header,...getHeaderApiSecret() }
 
     return new Promise<any>((resolve, reject) => {
-        let opt:RequestInit ={method:'GET'}; 
+        let opt:RequestInit ={method:'GET'};
         opt.headers=header;
         if(data) {
             opt.body= JSON.stringify(data) ;
@@ -118,7 +117,7 @@ export const mjFetch=(url:string,data?:any)=>{
         .catch(e=>reject(e)))
         .catch(e=>reject(e))
     })
-     
+
 }
 
 export const myFetch=(url:string,data?:any)=>{
@@ -127,7 +126,7 @@ export const myFetch=(url:string,data?:any)=>{
     //header= {...header  }
 
     return new Promise<any>((resolve, reject) => {
-        let opt:RequestInit ={method:'GET'}; 
+        let opt:RequestInit ={method:'GET'};
         opt.headers=header;
         if(data) {
             opt.body= JSON.stringify(data) ;
@@ -138,7 +137,7 @@ export const myFetch=(url:string,data?:any)=>{
         .catch(e=>reject(e)))
         .catch(e=>reject(e))
     })
-     
+
 }
 
 
@@ -154,17 +153,17 @@ export const flechTask= ( chat:Chat.Chat)=>{
         }
         const ts=  await mjFetch(`/mj/task/${chat.mjID}/fetch`);
         chat.opt= ts;
-        chat.loading=   (cnt>=99)?false:true; 
+        chat.loading=   (cnt>=99)?false:true;
         //chat.progress=ts.progress;
-    
+
         if(ts.progress && ts.progress== "100%") chat.loading=false;
 
         homeStore.setMyData({act:'updateChat', actData:chat });
         //"NOT_START" //["SUBMITTED","IN_PROGRESS"].indexOf(ts.status)>-1
         if( ["FAILURE","SUCCESS"].indexOf(ts.status)==-1 && cnt<100 ){
-           
+
             setTimeout(() =>   check( ) , 5000 )
-        } 
+        }
         mlog('task', ts.progress,ts );
     }
     check();
@@ -182,12 +181,12 @@ export const subTask= async (data:any, chat:Chat.Chat )=>{
      }
    }else if( data.action &&data.action=='blend') { //blend
        d=  await mjFetch('/mj/submit/blend' ,  data.data );
-   }else if( data.action &&data.action=='face') { //换脸 
-      d=  await mjFetch('/mj/insight-face/swap' , data.data  ); 
+   }else if( data.action &&data.action=='face') { //换脸
+      d=  await mjFetch('/mj/insight-face/swap' , data.data  );
       //mlog('换年服务', data.data );
-      //return; 
-   }else if( data.action &&data.action=='img2txt') { //图生文 
-        d=  await mjFetch('/mj/submit/describe' , data.data  ); 
+      //return;
+   }else if( data.action &&data.action=='img2txt') { //图生文
+        d=  await mjFetch('/mj/submit/describe' , data.data  );
    }else if( data.action &&data.action=='changeV2') { //执行动作！
      d=  await mjFetch('/mj/submit/action' , data.data  );
    }else {
@@ -208,10 +207,10 @@ export const subTask= async (data:any, chat:Chat.Chat )=>{
    if(d.code==21){
        d=  await mjFetch('/mj/submit/modal' , { taskId:d.result} );
    }
-     
+
     backOpt(d, chat);
-   
-    
+
+
     //if( chat.uuid &&  chat.index) updateChat(chat.uuid,chat.index, chat)
 }
 const backOpt= (d:any, chat:Chat.Chat )=>{
@@ -248,7 +247,7 @@ export const getSeed = async (cchat:Chat.Chat,message:any )=>{
       const res:any  = await mjSeed( cchat.mjID);
       seed= res.result;
       if(seed>0 ) {
-       
+
         if ( cchat.opt ){
           cchat.opt.seed = seed;
 
@@ -256,7 +255,7 @@ export const getSeed = async (cchat:Chat.Chat,message:any )=>{
         }
         message.success('获取成功');
       }
-      
+
    } catch(e){
       message.error('获取失败')
    }
@@ -266,21 +265,21 @@ export const getSeed = async (cchat:Chat.Chat,message:any )=>{
     await copyToClip(`${seed}`);
     message.success('复制seed成功');
   }
-  
+
 }
 
 export const getLastVersion=  async ()=>{
     const url='https://api.github.com/repos/Dooy/chatgpt-web-midjourney-proxy/tags?per_page=1';
     const a= await myFetch(url);
-    mlog('lastVersion', a ); 
+    mlog('lastVersion', a );
     return a;
-    
+
 }
 
 export const canVisionModel= (model:string)=>{
     //['gpt-4-all','gpt-4-v'].indexOf(model)==-1 && model.indexOf('gpt-4-gizmo')==-1
     if( ['gpt-4-all','gpt-4-v','gpt-4v','gpt-3.5-net'].indexOf(model)>-1 ) return true;
-    if(model.indexOf('gpt-4-gizmo')>-1 )return true; 
+    if(model.indexOf('gpt-4-gizmo')>-1 )return true;
     return false;
 }
 
@@ -323,7 +322,7 @@ export   function getFileFromClipboard(event:any ){
                 if (items[i].type.indexOf("image") !== -1 || items[i].kind === 'file') {
                     //rz.push( await fileToBase64(  items[i].getAsFile()) );
                     //mlog('fff', items[i] );
-                    rz.push( items[i].getAsFile()) 
+                    rz.push( items[i].getAsFile())
                 }
             }
 
