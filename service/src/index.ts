@@ -103,8 +103,7 @@ router.post('/verify', async (req, res) => {
  const API_BASE_URL = isNotEmptyString(process.env.OPENAI_API_BASE_URL)
     ? process.env.OPENAI_API_BASE_URL
     : 'https://api.openai.com'
-console.log("ENV_API_BASE_URL:"+process.env.OPENAI_API_BASE_URL);
-console.log("API_BASE_URL:"+API_BASE_URL);
+
 app.use('/mjapi', proxy(process.env.MJ_SERVER?process.env.MJ_SERVER:'https://api.openai.com', {
   https: false, limit: '10mb',
   proxyReqPathResolver: function (req) {
