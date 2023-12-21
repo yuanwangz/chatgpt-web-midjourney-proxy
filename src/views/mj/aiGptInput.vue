@@ -79,32 +79,62 @@ function selectFile(input:any){
 }
 
  const upFile= (file:any )=>{
-    if(  !canVisionModel(gptConfigStore.myData.model )  ) {
-        upImg( file).then(d=>{
-            fsRef.value.value='';
-            if(st.value.fileBase64.findIndex(v=>v==d)>-1) {
-                ms.error('不能重复上传')
-                return ;
-            }
-            st.value.fileBase64.push(d)
-        } ).catch(e=>ms.error(e));
-    }else{
-        const formData = new FormData( );
-        //const file = input.target.files[0];
-        formData.append('file', file);
-        ms.info('上传中...');
-        GptUploader('/v1/upload',formData).then(r=>{
-            //mlog('上传成功', r);
-            if(r.url ){
-                ms.info('上传成功');
-                if(r.url.indexOf('http')>-1) {
-                    st.value.fileBase64.push(r.url)
-                }else{
-                    st.value.fileBase64.push(location.origin +r.url)
-                }
-            }else if(r.error) ms.error(r.error);
-        }).catch(e=>ms.error('上传失败:'+ ( e.message?? JSON.stringify(e)) ));
-    }
+  const filename= file.name;
+   if (! (filename.endsWith('.jpg') ||
+       filename.endsWith('.gif') ||
+       filename.endsWith('.png') ||
+       filename.endsWith('.jpeg') )) {
+     upImg( file).then(d=>{
+       fsRef.value.value='';
+       if(st.value.fileBase64.findIndex(v=>v==d)>-1) {
+         ms.error('不能重复上传')
+         return ;
+       }
+       st.value.fileBase64.push(d)
+     } ).catch(e=>ms.error(e));
+   }else{
+     const formData = new FormData( );
+     //const file = input.target.files[0];
+     formData.append('file', file);
+     ms.info('上传中...');
+     GptUploader('/v1/upload',formData).then(r=>{
+       //mlog('上传成功', r);
+       if(r.url ){
+         ms.info('上传成功');
+         if(r.url.indexOf('http')>-1) {
+           st.value.fileBase64.push(r.url)
+         }else{
+           st.value.fileBase64.push(location.origin +r.url)
+         }
+       }else if(r.error) ms.error(r.error);
+     }).catch(e=>ms.error('上传失败:'+ ( e.message?? JSON.stringify(e)) ));
+   }
+    // if(  !canVisionModel(gptConfigStore.myData.model )  ) {
+    //     upImg( file).then(d=>{
+    //         fsRef.value.value='';
+    //         if(st.value.fileBase64.findIndex(v=>v==d)>-1) {
+    //             ms.error('不能重复上传')
+    //             return ;
+    //         }
+    //         st.value.fileBase64.push(d)
+    //     } ).catch(e=>ms.error(e));
+    // }else{
+    //     const formData = new FormData( );
+    //     //const file = input.target.files[0];
+    //     formData.append('file', file);
+    //     ms.info('上传中...');
+    //     GptUploader('/v1/upload',formData).then(r=>{
+    //         //mlog('上传成功', r);
+    //         if(r.url ){
+    //             ms.info('上传成功');
+    //             if(r.url.indexOf('http')>-1) {
+    //                 st.value.fileBase64.push(r.url)
+    //             }else{
+    //                 st.value.fileBase64.push(location.origin +r.url)
+    //             }
+    //         }else if(r.error) ms.error(r.error);
+    //     }).catch(e=>ms.error('上传失败:'+ ( e.message?? JSON.stringify(e)) ));
+    // }
  }
 
 
