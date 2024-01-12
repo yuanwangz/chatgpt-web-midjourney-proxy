@@ -1,5 +1,4 @@
 import localforage from "localforage"
-import { mlog } from "./mjapi";
 
 localforage.config({
     driver      : localforage.INDEXEDDB, // Force WebSQL; same as using setDriver()
@@ -18,7 +17,7 @@ export async function getImg( key:string ): Promise<any>
    return await localforage.getItem( key )
 }
 
-//本地存储使用了 
+//本地存储使用了
 export const localSave= async (  key:string, value:any)=>{
     await localforage.setItem( key, value )
 }
@@ -27,7 +26,7 @@ export const localGet= async( key:string )=>{
     return await localforage.getItem( key )
 }
 
-export const localSaveAny = async( value:any,key?:string )=>{ 
+export const localSaveAny = async( value:any,key?:string )=>{
     if(!key) key=`MJ:r:${Date.now()}:${Math.floor(Math.random() * 100)}`  ;
     await localSave(key,value);
     return key;
@@ -49,14 +48,14 @@ export function url2base64(url:string,key?:string){
 
         const img = new Image();
         img.crossOrigin = "anonymous";
-        img.onload=()=>{ 
-            const base64 = img2base64(img) ; 
+        img.onload=()=>{
+            const base64 = img2base64(img) ;
             localSaveAny(base64,key).then(d=>resolve({key:d, base64})).catch(e=>reject(e));
         }
         img.onerror=(e)=> reject(e);
         img.src =  url;
     });
-    
+
 }
 
 export const getMjAll= async ( ChatState:Chat.ChatState)=>{
